@@ -1,0 +1,14 @@
+[
+  {"Patch":"2.0","Expansion":"ARR","Role":"Start","Name":"Close to Home","Ids":[65621,65659,65660,65644,65645,66104,66105,66106]},
+  {"Patch":"2.0","Expansion":"ARR","Role":"Final","Name":"The Ultimate Weapon","Ids":[66060,70058]},
+  {"Patch":"2.1","Expansion":"ARR","Role":"Start","Name":"The Price of Principles","Ids":[66711]},
+  {"Patch":"2.1","Expansion":"ARR","Role":"Final","Name":"Build on the Stone","Ids":[66729,69414]},
+  {"Patch":"2.2","Expansion":"ARR","Role":"Start","Name":"Still Waters","Ids":[66881,69415]},
+  {"Patch":"2.2","Expansion":"ARR","Role":"Final","Name":"Through the Maelstrom","Ids":[66899]},
+  {"Patch":"2.3","Expansion":"ARR","Role":"Start","Name":"The Great Divide","Ids":[66978]},
+  {"Patch":"2.3","Expansion":"ARR","Role":"Final","Name":"Brave New Companions","Ids":[66996]},
+  {"Patch":"2.4","Expansion":"ARR","Role":"Start","Name":"Traitor in the Midst","Ids":[65588]},
+  {"Patch":"2.4","Expansion":"ARR","Role":"Final","Name":"Let Us Cling Together","Ids":[65625]},
+  {"Patch":"2.5","Expansion":"ARR","Role":"Start","Name":"Good Intentions","Ids":[65899]},
+  {"Patch":"2.5","Expansion":"ARR","Role":"Final","Name":"Before the Dawn","Ids":[65964]}
+]

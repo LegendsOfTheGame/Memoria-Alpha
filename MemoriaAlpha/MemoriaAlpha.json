@@ -1,0 +1,8 @@
+{
+  "Author": "LegendsOfTheGame",
+  "Name": "Memoria Alpha",
+  "Punchline": "Track your FFXIV quest progress at a glance.",
+  "Description": "Quest progress tracker showing completion by category, expansion, and tribe. No automation, just information.",
+  "ApplicableVersion": "any",
+  "Tags": [ "quests", "progress", "tracking" ]
+}

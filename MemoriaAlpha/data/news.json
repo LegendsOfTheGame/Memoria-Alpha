@@ -1,0 +1,109 @@
+{
+  "maintenance": {
+    "updated": true,
+    "start": 1754355600,
+    "end": 1754388000
+  },
+  "latestCountdownID": 49,
+  "countdowns": [
+    {
+      "title": "Valentione's Day",
+      "type": "event",
+      "url": "https://na.finalfantasyxiv.com/lodestone/special/2026/Valentiones_Day/wenbvnlh6s",
+      "start": 1770019200,
+      "end": 1771254000
+    },
+    {
+      "title": "Patch 7.41",
+      "type": "patch",
+      "start": 1765882800
+    }
+  ],
+  "latestID": 250214,
+  "news": [
+    {
+      "ID": 250214,
+      "title": "Update on checklist issues",
+      "published": "February 14, 2025",
+      "content": "A few people have reported issues with the checklist not updating properly. I've made some changes to the backend to hopefully fix this issue. If you still encounter issues, please let me know! Thank you for your patience."
+    },
+    {
+      "ID": 240627,
+      "title": "Release of Dawntrail",
+      "published": "June 27, 2024",
+      "content": "After a two and a half years wait, Dawntrail is finally at our doorstep! I've updated XIV ToDo with placeholders for the new content, which will be updated in the coming days. Any content name considered spoilers will be blurred by default, as always. If you encounter any issues, please let me know! In the meantime, happy new expansion!"
+    },
+    {
+      "ID": 240421,
+      "title": "Theme & styling updates",
+      "published": "April 21, 2024",
+      "content": "While waiting for Dawntrail, I've spent some time cleaning up XIV ToDo (and fixing a few issues). More visibly, I've tweaked the styling of the site (text, layout, etc.) and added a light theme, which you can try from the settings page. Do let me know if you have any feedback or issues with either of the current themes, or if you have any ideas for another palette theme!"
+    },
+    {
+      "ID": 231003,
+      "title": "Release of patch 6.5",
+      "published": "October 3, 2023",
+      "content": "Patch 6.5 is now live, and XIV ToDo has been updated with the new content! As always, let me know if you encounter any issues. Thank you for your support!"
+    },
+    {
+      "ID": 230523,
+      "title": "Release of patch 6.4",
+      "published": "May 23, 2023",
+      "content": "Patch 6.4 is now live, and XIV ToDo has been updated with the new content! As always, let me know if you encounter any issues. Thank you for your support!"
+    },
+    {
+      "ID": 230321,
+      "title": "XIV ToDo localization",
+      "published": "March 21, 2023",
+      "content": "I had been asked a few times whether it was possible to have XIV ToDo in other languages, but I had not had the time to work on it... Until now! I'm happy to announce that I've finally set-up a localization system tied with Crowdin. If you are interested in helping out, please visit <a href='https://crowdin.com/project/xiv-todo' target='_blank' rel='noopener noreferrer'>the Crowdin project</a> and sign up! For more details or to get help, I created a #translation channel in the <a href='https://discord.gg/zfzhKhG3zj' target='_blank' rel='noopener noreferrer'>Discord server</a>. Thank you for your support!"
+    },
+    {
+      "ID": 230110,
+      "title": "Happy year 2023!",
+      "published": "January 10, 2023",
+      "content": "A few days late, but happy year 2023 to all! XIV ToDo is now updated with 6.3 content. As always, let me know of any issues! Additionally, there seem to be some intermittent issues with signing in. If such issue happen, please try again 30-60 minutes later -- I am looking into it. Thank you everyone for supporting me and enjoying this tool!"
+    },
+    {
+      "ID": 220612,
+      "title": "Encounter & questline manual tracking",
+      "published": "June 12, 2022",
+      "content": "Another weekend, another long-awaited feature is here! Is the automatic encounter & questline tracker not working quite right? You can now mark those as cleared manually! Just click on the question mark icon besides the questline or encounter! (Bonus points: I've also added all of the Guildhests in the list of ARR encounters.)"
+    },
+    {
+      "ID": 220525,
+      "title": "Checklist customization",
+      "published": "May 25, 2022",
+      "content": "Hi all! It's been a (very) long time coming, but I've just published a few additional QoL features and tweaks for the checklists, including the long-awaited feature of being able to sort / move checklist items around! Try it out and let me know what you think! You can move checklist items by clicking the green 'Customize' button and drag-and-dropping items around."
+    },
+    {
+      "ID": 220313,
+      "title": "Implementation of accounts system",
+      "published": "March 13, 2022",
+      "content": "Following a small break due to me going through Endwalker and a busy season at work, I have an important update: XIV ToDo now supports Discord sign-ins! This means that your data is stored on the cloud instead of your local device, allowing you to sign in from multiple devices at once. This required a lot of work behind the scenes, and has two big implications: it costs me more due to the additional infrastructure, and everyone has a 'fresh slate' and will need to re-add their characters and re-do their checklists. I apologize for the inconvenience. Lastly, I now have a <a href='https://discord.gg/zfzhKhG3zj' target='_blank' rel='noopener noreferrer'>Discord</a> server in addition of the <a href='https://twitter.com/XIVToDo' target='_blank' rel='noopener noreferrer'>Twitter</a> account. As always, thank you for your support and patience!"
+    },
+    {
+      "ID": 211202,
+      "title": "Release of Endwalker",
+      "published": "December 2, 2021",
+      "content": "With Endwalker's impending release, I've started to add placeholders for the various additions that the expansion brings. I am working hard to make sure that XIV ToDo gets updated with Endwalker content as soon as possible! In the meantime, I hope to see you all once the game is up and running again!"
+    },
+    {
+        "ID": 210924,
+        "title": "Rate-limiting update #2",
+        "published": "September 24, 2021",
+        "content": "After a week of work, I've just updated XIV ToDo to fix a handful of issues that were reported. You will notice that your characters will auto-update the first time the page is loaded after this update; this is normal. Additionally, I've scaled up my infrastructure to be able to accomodate for unexpected influx of users. Thank you for your support!"
+    },
+    {
+        "ID": 210917,
+        "title": "Rate-limiting update #1",
+        "published": "September 17, 2021",
+        "content": "Following yesterday's update, things have started to calm down a bit and the API seems to be returning slightly more consistent results. Adding characters should be a smoother experience now. That said, the API is still not 100% consistent and I am still working on stabilization before I move on to new features. Feel free to keep making full use of the <a href='/checklist'>Checklist</a> page in the meantime, since that feature doesn't rely on Lodestone. Again, thank you for your patience!"
+    },
+    {
+        "ID": 210916,
+        "title": "Lodestone rate-limiting",
+        "published": "September 16, 2021",
+        "content": "Firstly, thank you all for your support and interest! After the traction this site has gotten from a <a href='https://www.reddit.com/r/ffxiv/comments/powkci/overwhelmed_with_the_amount_of_content_and_not/' target='_blank' rel='noopener noreferrer'>Reddit thread</a>, the API I use to get information from Lodestone is getting rate-limited by the amount of people trying out XIV ToDo at the same time. Unfortunately, this means that the Lodestone is returning errors and incomplete data-sets. As such, you may be unable to add a character or get a complete and accurate view of your progression until the load stabilizes. I am looking into mitigating this issue in the future, but in the meantime please try refreshing your characters again later. Thank you!"
+    }
+  ]
+}
