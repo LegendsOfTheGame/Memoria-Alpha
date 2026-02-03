@@ -1,0 +1,32 @@
+name: Sync XIVToDo news.json
+
+on:
+  schedule:
+    # Runs every 3 days at 00:00 UTC (close enough to ~60 hours, low noise)
+    - cron: "0 0 */3 * *"
+  workflow_dispatch:
+
+jobs:
+  sync-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download XIVToDo news.json
+        run: |
+          curl -L "https://raw.githubusercontent.com/bourgeoisor/xivtodo/main/frontend/src/assets/news.json" -o /tmp/news.json
+
+      - name: Update local news.json
+        run: |
+          cp /tmp/news.json data/news.json
+
+      - name: Commit if changed
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "data/news.json"
+          message: "chore: sync news.json from XIVToDo"
+          default_author: github_actions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
