@@ -2,7 +2,7 @@ name: Sync XIVToDo news.json
 
 on:
   schedule:
-    # Runs every 3 days at 00:00 UTC (close enough to ~60 hours, low noise)
+    # Runs every 3 days at 00:00 UTC
     - cron: "0 0 */3 * *"
   workflow_dispatch:
 
@@ -16,10 +16,11 @@ jobs:
 
       - name: Download XIVToDo news.json
         run: |
-          curl -L "https://raw.githubusercontent.com/bourgeoisor/xivtodo/main/frontend/src/assets/news.json" -o /tmp/news.json
+          curl -fL "https://raw.githubusercontent.com/bourgeoisor/xivtodo/main/frontend/src/assets/news.json" -o /tmp/news.json
 
       - name: Update local news.json
         run: |
+          mkdir -p data
           cp /tmp/news.json data/news.json
 
       - name: Commit if changed
