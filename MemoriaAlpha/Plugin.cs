@@ -25,7 +25,6 @@ public sealed class Plugin : IDalamudPlugin
     private const string CommandName = "/pmycommand";
 
     public Configuration Configuration { get; init; }
-
     public readonly WindowSystem WindowSystem = new("MemoriaAlpha");
     private ConfigWindow ConfigWindow { get; init; }
     private MainWindow MainWindow { get; init; }
@@ -35,8 +34,12 @@ public sealed class Plugin : IDalamudPlugin
     // ToC + data
     public TocService Toc { get; }
     public QuestRepository QuestRepository { get; }
+    
+    // New: NewsRepository and cached news data
+    public NewsRepository NewsRepository { get; }
+    public NewsRoot? News { get; private set; }
 
-    // New: cached GC string
+    // Cached GC string
     public string PlayerGc { get; }
 
     public Plugin()
@@ -44,11 +47,14 @@ public sealed class Plugin : IDalamudPlugin
         Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
 
         var pluginDir = PluginInterface.AssemblyLocation.DirectoryName!;
-        var tocPath   = Path.Combine(pluginDir, "toc.json");
+        var tocPath = Path.Combine(pluginDir, "toc.json");
         Toc = new TocService(tocPath);
 
         var dataRoot = Path.Combine(pluginDir, "data");
         QuestRepository = new QuestRepository(dataRoot);
+
+        NewsRepository = new NewsRepository(pluginDir);
+        News = NewsRepository.Load();
 
         var highestPatch = GetHighestCompletedPatch();
         Log.Information($"[Memoria Alpha] Highest completed patch: {highestPatch}");
@@ -61,7 +67,7 @@ public sealed class Plugin : IDalamudPlugin
         PlayerGc = DetectPlayerGc();
 
         ConfigWindow = new ConfigWindow(this);
-        MainWindow   = new MainWindow(this);
+        MainWindow = new MainWindow(this);
 
         WindowSystem.AddWindow(ConfigWindow);
         WindowSystem.AddWindow(MainWindow);
@@ -71,18 +77,18 @@ public sealed class Plugin : IDalamudPlugin
             HelpMessage = "Toggle Memoria Alpha's main window."
         });
 
-        PluginInterface.UiBuilder.Draw        += WindowSystem.Draw;
+        PluginInterface.UiBuilder.Draw += WindowSystem.Draw;
         PluginInterface.UiBuilder.OpenConfigUi += ToggleConfigUi;
-        PluginInterface.UiBuilder.OpenMainUi   += ToggleMainUi;
+        PluginInterface.UiBuilder.OpenMainUi += ToggleMainUi;
 
         Log.Information($"=== Memoria Alpha loaded ({PluginInterface.Manifest.Name}) ===");
     }
 
     public void Dispose()
     {
-        PluginInterface.UiBuilder.Draw        -= WindowSystem.Draw;
+        PluginInterface.UiBuilder.Draw -= WindowSystem.Draw;
         PluginInterface.UiBuilder.OpenConfigUi -= ToggleConfigUi;
-        PluginInterface.UiBuilder.OpenMainUi   -= ToggleMainUi;
+        PluginInterface.UiBuilder.OpenMainUi -= ToggleMainUi;
 
         WindowSystem.RemoveAllWindows();
         ConfigWindow.Dispose();
@@ -96,13 +102,12 @@ public sealed class Plugin : IDalamudPlugin
     }
 
     public void ToggleConfigUi() => ConfigWindow.Toggle();
-    public void ToggleMainUi()   => MainWindow.Toggle();
+    public void ToggleMainUi() => MainWindow.Toggle();
 
     // Uses toc.json + quest completion to find highest completed patch
     private string GetHighestCompletedPatch()
     {
         var finalByPatch = Toc.GetFinalMsqByPatch();
-
         var orderedPatches = finalByPatch.Keys
             .Select(p => new { Patch = p, Version = Version.Parse(p) })
             .OrderBy(x => x.Version)
@@ -112,12 +117,10 @@ public sealed class Plugin : IDalamudPlugin
             return "2.0";
 
         string highest = orderedPatches.First().Patch;
-
         foreach (var entry in orderedPatches)
         {
             var allDone = finalByPatch[entry.Patch]
                 .All(id => IsQuestCompleted(id));
-
             if (allDone)
                 highest = entry.Patch;
             else
@@ -154,17 +157,15 @@ public sealed class Plugin : IDalamudPlugin
 
     // Detect player GC from Dalamud's PlayerState
     private string DetectPlayerGc()
-{
-    // PlayerState.GrandCompany is a RowRef<GrandCompany>, use its Key value
-    var gcKey = (int)PlayerState.GrandCompany.RowId;
-
-    switch (gcKey)
     {
-        case 1: return "Maelstrom";
-        case 2: return "Twin Adder";
-        case 3: return "Immortal Flames";
-        default: return ""; // no GC yet
+        // PlayerState.GrandCompany is a RowRef, use its Key value
+        var gcKey = (int)PlayerState.GrandCompany.RowId;
+        switch (gcKey)
+        {
+            case 1: return "Maelstrom";
+            case 2: return "Twin Adder";
+            case 3: return "Immortal Flames";
+            default: return ""; // no GC yet
+        }
     }
-}
-
 }

@@ -26,7 +26,6 @@ public class MainWindow : Window
         : base("Memoria Alpha")
     {
         this.plugin = plugin;
-
         SizeConstraints = new WindowSizeConstraints
         {
             MinimumSize = new Vector2(500, 350),
@@ -39,23 +38,75 @@ public class MainWindow : Window
         ImGui.Text("Quest Overview (dummy data)");
         ImGui.Separator();
 
+        DrawNewsSection();
+
         DrawTopCategoryCombo();
         DrawSubCategoryCombo();
         ImGui.Separator();
-
         DrawQuestTable();
+    }
+
+    private void DrawNewsSection()
+    {
+        if (ImGui.CollapsingHeader("News / Events"))
+        {
+            var news = plugin.News;
+            if (news == null)
+            {
+                ImGui.TextDisabled("No news data available.");
+            }
+            else
+            {
+                // Next maintenance
+                var maint = NewsRepository.GetUpcomingMaintenance(news);
+                if (maint != null)
+                {
+                    var startStr = NewsRepository.FormatDateTime(maint.Start);
+                    var endStr = NewsRepository.FormatDateTime(maint.End);
+                    ImGui.TextColored(new Vector4(1.0f, 0.5f, 0.0f, 1.0f), $"⚠ Maintenance: {startStr} - {endStr}");
+                }
+                else
+                {
+                    ImGui.Text("✔ No upcoming maintenance.");
+                }
+
+                // Next patch
+                var patch = NewsRepository.GetNextPatch(news);
+                if (patch != null)
+                {
+                    var status = NewsRepository.GetEventStatus(patch);
+                    ImGui.Text($"📦 {patch.Title}: {status}");
+                }
+
+                // Next/active event
+                var evt = NewsRepository.GetNextEvent(news);
+                if (evt != null)
+                {
+                    var status = NewsRepository.GetEventStatus(evt);
+                    ImGui.Text($"🎉 {evt.Title}: {status}");
+                }
+
+                // Attribution
+                ImGui.Spacing();
+                ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.6f, 0.6f, 0.6f, 1.0f));
+                ImGui.TextWrapped("News data provided by XIV ToDo (xivtodo.com)");
+                ImGui.PopStyleColor();
+            }
+
+            ImGui.Separator();
+        }
     }
 
     private void DrawTopCategoryCombo()
     {
         string label = selectedTopCategory switch
         {
-            TopCategory.MainScenario    => "Main Scenario",
-            TopCategory.Chronicles      => "Chronicles of a New Era",
-            TopCategory.Side            => "Sidequests",
+            TopCategory.MainScenario => "Main Scenario",
+            TopCategory.Chronicles => "Chronicles of a New Era",
+            TopCategory.Side => "Sidequests",
             TopCategory.AlliedSocieties => "Allied Society Quests",
-            TopCategory.ClassJob        => "Class & Job Quests",
-            _                           => "Other",
+            TopCategory.ClassJob => "Class & Job Quests",
+            _ => "Other",
         };
 
         ImGui.SetNextItemWidth(-1);
@@ -73,12 +124,12 @@ public class MainWindow : Window
                     ImGui.SetItemDefaultFocus();
             }
 
-            Option(TopCategory.MainScenario,    "Main Scenario");
-            Option(TopCategory.Chronicles,      "Chronicles of a New Era");
-            Option(TopCategory.Side,            "Sidequests");
+            Option(TopCategory.MainScenario, "Main Scenario");
+            Option(TopCategory.Chronicles, "Chronicles of a New Era");
+            Option(TopCategory.Side, "Sidequests");
             Option(TopCategory.AlliedSocieties, "Allied Society Quests");
-            Option(TopCategory.ClassJob,        "Class & Job Quests");
-            Option(TopCategory.Other,           "Other");
+            Option(TopCategory.ClassJob, "Class & Job Quests");
+            Option(TopCategory.Other, "Other");
 
             ImGui.EndCombo();
         }
@@ -115,27 +166,22 @@ public class MainWindow : Window
                 "ARR – Sahagin",
                 "ARR – Ixali",
                 "ARR – Intersocietal",
-
                 "HW – Vanu Vanu",
                 "HW – Vath",
                 "HW – Moogle",
                 "HW – Intersocietal",
-
                 "StB – Kojin",
                 "StB – Ananta",
                 "StB – Namazu",
                 "StB – Intersocietal",
-
                 "ShB – Pixie",
                 "ShB – Qitari",
                 "ShB – Dwarf",
                 "ShB – Intersocietal",
-
                 "EW – Arkasodara",
                 "EW – Omicron",
                 "EW – Loporrit",
                 "EW – Intersocietal",
-
                 "DT – Pelupelu",
                 "DT – Mamool Ja",
                 "DT – Yok Huy",
@@ -163,7 +209,6 @@ public class MainWindow : Window
                 if (selected)
                     ImGui.SetItemDefaultFocus();
             }
-
             ImGui.EndCombo();
         }
     }
@@ -179,24 +224,22 @@ public class MainWindow : Window
         }
 
         var quests = plugin.Quests.AsEnumerable();
-
         quests = selectedTopCategory switch
         {
-            TopCategory.MainScenario    => quests.Where(q => q.Category == QuestCategory.MainScenario),
-            TopCategory.Chronicles      => quests.Where(q => q.Category == QuestCategory.Chronicles),
-            TopCategory.Side            => quests.Where(q => q.Category == QuestCategory.Side),
+            TopCategory.MainScenario => quests.Where(q => q.Category == QuestCategory.MainScenario),
+            TopCategory.Chronicles => quests.Where(q => q.Category == QuestCategory.Chronicles),
+            TopCategory.Side => quests.Where(q => q.Category == QuestCategory.Side),
             TopCategory.AlliedSocieties => quests.Where(q => q.Category == QuestCategory.AlliedSocieties),
-            TopCategory.ClassJob        => quests.Where(q => q.Category == QuestCategory.ClassJob),
-            _                           => quests.Where(q => q.Category == QuestCategory.Other),
+            TopCategory.ClassJob => quests.Where(q => q.Category == QuestCategory.ClassJob),
+            _ => quests.Where(q => q.Category == QuestCategory.Other),
         };
 
         // Filter by starting city and GC for ARR MSQ
         if (selectedTopCategory == TopCategory.MainScenario &&
             selectedSubIndex == 0) // Seventh Umbral Era (ARR)
         {
-            var playerStart     = plugin.GetStartCity();
+            var playerStart = plugin.GetStartCity();
             var normalizedStart = playerStart.ToLowerInvariant();
-
             quests = quests.Where(q =>
                 string.IsNullOrEmpty(q.Start) ||
                 q.Start.ToLowerInvariant() == normalizedStart);
@@ -228,7 +271,7 @@ public class MainWindow : Window
         }
 
         if (ImGui.BeginTable("QuestTable", 3,
-                ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.SizingStretchProp))
+            ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.SizingStretchProp))
         {
             ImGui.TableSetupColumn(" ");
             ImGui.TableSetupColumn("Title");
@@ -238,13 +281,10 @@ public class MainWindow : Window
             foreach (var quest in list)
             {
                 ImGui.TableNextRow();
-
                 ImGui.TableSetColumnIndex(0);
                 ImGui.Text(quest.Completed ? "✔" : " ");
-
                 ImGui.TableSetColumnIndex(1);
                 ImGui.Text(quest.Title);
-
                 ImGui.TableSetColumnIndex(2);
                 ImGui.Text(quest.Area);
             }

@@ -7,17 +7,21 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  <!-- Copy quest data from project data folder -->
   <ItemGroup>
-    <Content Include="..\Data\goat.png">
+    <Content Include="data\**\*.json"> <!-- changed -->
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Visible>false</Visible>
+      <Link>data\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <Visible>false</Visible> <!-- new -->
     </Content>
   </ItemGroup>
 
-  <!-- New: copy the entire data folder like Cat's data.json -->
+  <!-- Copy news.json from repo root -->
   <ItemGroup>
-    <None Include="data\**\*.*">
+    <Content Include="..\data\news.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+      <Link>data\news.json</Link>
+      <Visible>false</Visible> <!-- new -->
+    </Content>
   </ItemGroup>
 </Project>
